@@ -12,4 +12,8 @@ app.get("/", async function (req, res) {
 	res.send(payUrl);
 });
 
+app.listen(8080, () => {
+	console.log("server running on port 8080");
+});
+
 module.exports = app;
