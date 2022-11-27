@@ -12,4 +12,4 @@ app.get("/", async function (req, res) {
 	res.send(payUrl);
 });
 
-app.listen(9000);
+module.exports = app;
