@@ -1,6 +1,9 @@
 import express from "express";
+import cors from "cors";
 import { createPaymentRequest } from "./createMomoPayment.js";
 const app = express();
+
+app.use(cors());
 
 app.get("/", async function (req, res) {
 	const { orderInfo, amount } = req.query;
