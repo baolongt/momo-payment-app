@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import { createPaymentRequest } from "./createMomoPayment.js";
+import { validatePayment } from "./validatePayment.js";
 const app = express();
 
 app.use(cors());
@@ -16,6 +17,15 @@ app.get("/", async function (req, res) {
 
 		const payUrl = await createPaymentRequest(payment);
 		res.send(payUrl);
+	}
+});
+
+app.get("/check", async function (req, res) {
+	const { requestId, orderId } = req.query;
+	if (!requestId || !orderId) res.send("must provide requestId and orderId");
+	else {
+		const trans = await validatePayment(requestId, orderId);
+		res.send(trans);
 	}
 });
 
