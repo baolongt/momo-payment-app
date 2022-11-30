@@ -4,7 +4,7 @@ import { createSignature } from "./createSignature.js";
 dotenv.config();
 
 const request = (requestBody) => {
-	let url = "";
+	let response = {};
 	return new Promise((resolve, reject) => {
 		const options = {
 			hostname: "test-payment.momo.vn",
@@ -20,11 +20,11 @@ const request = (requestBody) => {
 		const req = https.request(options, (res) => {
 			res.setEncoding("utf8");
 			res.on("data", (body) => {
-				url = JSON.parse(body).payUrl;
+				response = JSON.parse(body);
 			});
 			res.on("end", () => {
-				console.log("url", url);
-				resolve(url);
+				console.log("response", response);
+				resolve(response);
 			});
 		});
 
@@ -42,7 +42,7 @@ const createBody = ({ orderInfo, amount }) => {
 	var requestId = partnerCode + new Date().getTime();
 	var orderId = requestId;
 	var redirectUrl = process.env.RETURN_URL;
-	var ipnUrl = "http://localhost:3000";
+	var ipnUrl = process.env.IPN_URL;
 	// var ipnUrl = redirectUrl = "https://webhook.site/454e7b77-f177-4ece-8236-ddf1c26ba7f8";
 	var requestType = "captureWallet";
 	var extraData = ""; //pass empty value if your merchant does not have stores
